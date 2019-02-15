@@ -1,0 +1,18 @@
+Loaded page 1
+...
+Loaded page 107
+Loaded page 108
+Average api response time: 1.426
+Tracks loaded: 21601
+
+Top track: Without You by Oh Wonder
+Number of plays: 91
+
+Top artist: Mac Miller
+Number of plays: 1808
+Mac Miller consumed 8.4% of your listening
+
+Most Repeated: Sober by Childish Gambino
+Number of plays: 4
+
+Process finished with exit code 0

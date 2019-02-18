@@ -1,8 +1,6 @@
 import json
 import urllib.request
 
-api_key = '359aa051532190aecabb2e638f0313c6'
-api_secret = 'a5ced820a7e12b07d37782b9fa2ff405'
 # Registered to tarmander13
 
 

@@ -1,16 +1,48 @@
+Enter LastFM Username: tarmander13
 Loaded page 1
 ...
-Loaded page 107
 Loaded page 108
-Average api response time: 1.426
-Tracks loaded: 21601
+Loaded page 109
+
+Average api response time: 1.517
+Tracks loaded: 21735
+
+Enter command, or HELP for help: help
+
+Commands available:
+top_track
+top_artist
+on_repeat
+song_play_count (song)
+track_by_artist (artist)
+album_by_artist (artist)
+song_by_album (album)
+Enter command, or HELP for help: top_track
 
 Top track: Without You by Oh Wonder
 Number of plays: 91
 
+Enter command, or HELP for help: top_artist
+
 Top artist: Mac Miller
-Number of plays: 1808
+Number of plays: 1819
 Mac Miller consumed 8.4% of your listening
+
+Enter command, or HELP for help: on_repeat
 
 Most Repeated: Sober by Childish Gambino
 Number of plays: 4
+
+Enter command, or HELP for help: song_play_count The Ways (with Swae Lee)
+You listened to The Ways (with Swae Lee) 39 times
+
+Enter command, or HELP for help: track_by_artist led zeppelin
+
+Top track for led zeppelin: D'yer Mak'er
+Number of plays: 16
+
+Enter command, or HELP for help: album_by_artist the lumineers
+Your top album from the lumineers is Cleopatra, with 303 listens
+
+Enter command, or HELP for help: song_by_album pure heroine (extended)
+Your top track from pure heroine (extended) is Bravado with 36 plays

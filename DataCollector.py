@@ -11,6 +11,7 @@ class DataCollector:
 
     def __init__(self):
         import time
+        from API_Credentials import api_key
         target = input("\nEnter last.fm username: ")
         url = "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" + target + \
               "&api_key=" + api_key + "&format=json&limit=200"

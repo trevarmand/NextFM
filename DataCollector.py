@@ -36,9 +36,10 @@ class DataCollector:
             except urllib.error.HTTPError:
                 if fail_attempts > 5:
                     print("Server Error, loading failed")
-                    fail_attempts += 1
+                    return
                 else:
                     time.sleep(0.5)
+                    fail_attempts += 1
                     print("Server issue fetching page, retrying: " + str(fail_attempts) + "/5")
                     continue  # Start the loop again, i doesn't increase so just retries the current page
             temp_data = json.load(url_data)
@@ -46,9 +47,11 @@ class DataCollector:
             temp_data['recenttracks']['track'].pop(0)  # Don't include current track in data
             self.parseable_data['recenttracks']['track'].extend(temp_data['recenttracks']['track'])
             print("Loaded page " + str(i))
+            fail_attempts = 0 # 5 attempts on a given page = failure
             i += 1
         print("\nAverage api response time: " + str(round(api_total_time / (i - 1), 3)))
 
+    # Run the program
     def main(self):
         self.tracks_loaded = len(self.parseable_data['recenttracks']['track'])
         print("Tracks loaded: " + str(self.tracks_loaded) + "\n")
@@ -59,7 +62,7 @@ class DataCollector:
         next_in = input("Enter command, or HELP for help: ")
         if next_in.lower() == 'help':
             print("\nCommands available:\ntop_track\ntop_artist\non_repeat"
-                  "\nsong_play_count (song)\ntrack_by_artist (artist)\nalbum_by_artist (artist)\nsong_by_album (album)")
+                  "\nsong_play_count (song)\nsong_by_artist (artist)\nalbum_by_artist (artist)\nsong_by_album (album)")
         elif next_in == 'top_track':
             self.most_played_song()
         elif next_in == 'top_artist':
@@ -68,8 +71,8 @@ class DataCollector:
             self.played_on_repeat()
         elif next_in.__contains__('song_play_count'):
             self.song_play_count(next_in[16:])
-        elif next_in.__contains__('track_by_artist'):
-            self.top_track_by_artist(next_in[14:])
+        elif next_in.__contains__('song_by_artist'):
+            self.top_track_by_artist(next_in[16:])
         elif next_in.__contains__('album_by_artist'):
             self.album_by_artist(next_in[16:])
         elif next_in.__contains__('song_by_album'):

@@ -56,27 +56,35 @@ class DataCollector:
         self.tracks_loaded = len(self.parseable_data['recenttracks']['track'])
         print("Tracks loaded: " + str(self.tracks_loaded) + "\n")
         self.take_input()
+        self.album_play_count("Swimming")
 
     # Prompt the user for input so they can gather insights on their listening
     def take_input(self):
         next_in = input("Enter command, or HELP for help: ")
         if next_in.lower() == 'help':
-            print("\nCommands available:\ntop_track\ntop_artist\non_repeat"
-                  "\nsong_play_count (song)\nsong_by_artist (artist)\nalbum_by_artist (artist)\nsong_by_album (album)")
+            print("\nCommands available:\ntop_track\ntop_artist\ntop_album\non_repeat"
+                  "\nsong_play_count (song)\nalbum_play_count (album)"
+                  "\nsong_by_artist (artist)\nalbum_by_artist (artist)\nsong_by_album (album)")
         elif next_in == 'top_track':
             self.most_played_song()
         elif next_in == 'top_artist':
             self.most_played_artist()
+        elif next_in == 'top_album':
+            self.most_played_album()
         elif next_in == 'on_repeat':
             self.played_on_repeat()
         elif next_in.__contains__('song_play_count'):
             self.song_play_count(next_in[16:])
+        elif next_in.__contains__('album_play_count'):
+            self.album_play_count(next_in[17:])
         elif next_in.__contains__('song_by_artist'):
-            self.top_track_by_artist(next_in[16:])
+            self.top_track_by_artist(next_in[15:])
         elif next_in.__contains__('album_by_artist'):
             self.album_by_artist(next_in[16:])
         elif next_in.__contains__('song_by_album'):
             self.song_by_album(next_in[14:])
+        elif next_in == 'quit':
+            return
         self.take_input()
 
     # Prints the most played song by artist and number of times
@@ -99,7 +107,7 @@ class DataCollector:
     def most_played_artist(self):
         artist_counts = {}
         top_count = 0
-        top_artist = "jjju"
+        top_artist = ""
         for track in self.parseable_data['recenttracks']['track']:
             artist_name = track['artist']['#text']
             artist_counts[artist_name] = artist_counts.get(artist_name, 0) + 1
@@ -109,6 +117,19 @@ class DataCollector:
         print("\nTop artist: " + top_artist)
         print("Number of plays: " + str(top_count))
         print(top_artist + " consumed " + str(round(top_count / self.tracks_loaded, 3) * 100) + "% of your listening\n")
+
+    # Prints the most played album and number of plays
+    def most_played_album(self):
+        album_counts = {}
+        top_count = 0
+        top_album = "jjju"
+        for track in self.parseable_data['recenttracks']['track']:
+            album_name = track['album']['#text']
+            album_counts[album_name] = album_counts.get(album_name, 0) + 1
+            if album_counts.get(album_name) > top_count:
+                top_album = album_name
+                top_count = album_counts.get(album_name, 0)
+        print("Your most played album is \'" + top_album + "\' with " + str(top_count) + " plays");
 
     # Prints the most repeated song and the number of repeats
     def played_on_repeat(self):
@@ -158,6 +179,14 @@ class DataCollector:
                 count += 1
         print("You listened to " + song + " " + str(count) + " times\n")
 
+    # Prints the number of times you played the specified song
+    def album_play_count(self, album):
+        count = 0
+        for track in self.parseable_data['recenttracks']['track']:
+            if track['album']['#text'].lower() == album.lower():
+                count += 1
+        print("You listened to " + album + " " + str(count) + " times\n")
+
     # Tells you your favorite album from the specified artist
     def album_by_artist(self, artist):
         album_counts = {}
@@ -174,7 +203,7 @@ class DataCollector:
         else:
             print("Your top album from " + artist + " is " + top_album + ", with " + str(cur_max) + " listens\n")
 
-    # Tells you your favorite song from a given album
+    # Prints your most played song from a given album
     def song_by_album(self, album):
         song_counts = {}
         top_song = "null"
